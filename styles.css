@@ -114,3 +114,7 @@ body {
 .predict-button:hover {
     background-color: darkblue;
 }
+
+.result-text{
+    font-size: 1.2rem;
+}

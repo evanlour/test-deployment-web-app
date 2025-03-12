@@ -55,6 +55,7 @@ submitButton.addEventListener('click', () => {
   const can = document.getElementById('drawing-canvas');
   const tempCanvas = document.createElement('canvas');
   const tempCtx = tempCanvas.getContext('2d');
+  resDiv = document.querySelector('.result-text').textContent = "";
 
   // Set tempCanvas size to match the original canvas
   tempCanvas.width = can.width;
@@ -80,7 +81,8 @@ submitButton.addEventListener('click', () => {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);  // Handle server response here
+    console.log(data)
+    resDiv = document.querySelector('.result-text').textContent = "Predicted result: " + data['prediction'];
   })
   .catch(error => console.error('Error:', error));
 });
