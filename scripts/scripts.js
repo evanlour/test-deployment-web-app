@@ -110,7 +110,7 @@ submitButton.addEventListener('click', () => {
 
   // Convert to base64 PNG (now guaranteed to be RGB)
   const dataURL = tempCanvas.toDataURL('image/png');
-  fetch('https://letterandtextrecognition.loca.lt/predict', {
+  fetch('https://crazy-comics-brush.loca.lt/predict', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',  // Send data as JSON
