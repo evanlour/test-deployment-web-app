@@ -10,40 +10,80 @@ ctx.lineWidth = 3; // Set line width
 ctx.lineCap = 'round'; // Round line cap for smoother curves
 ctx.strokeStyle = '#000'; // Black color for the line
 
-// Start drawing when mouse is pressed down
-canvas.addEventListener('mousedown', (e) => {
-  drawing = true; // Start drawing
-  ctx.beginPath(); // Start a new path for the line
-  ctx.moveTo(getMousePosition(e).x, getMousePosition(e).y); // Move to the mouse position
-});
+// Start drawing when mouse or touch is pressed down
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('touchstart', startDrawing); // For touch devices
 
-// Draw while the mouse moves (if the mouse button is held down)
-canvas.addEventListener('mousemove', (e) => {
+// Draw while the mouse moves or touch moves (if the button is held down)
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('touchmove', drawTouch); // For touch devices
+
+// Stop drawing when the mouse button is released or touch ends
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('touchend', stopDrawingTouch); // For touch devices
+
+// Stop drawing if mouse or touch leaves the canvas (optional)
+canvas.addEventListener('mouseleave', stopDrawing);
+canvas.addEventListener('touchcancel', stopDrawingTouch); // For touch devicesFlag to track if we're drawing
+
+// Start drawing function
+function startDrawing(e) {
+  drawing = true;
+  ctx.beginPath();
+  const mousePos = getMousePosition(e);
+  ctx.moveTo(mousePos.x, mousePos.y);
+  e.preventDefault(); // Prevent default behavior (e.g., scrolling on touch)
+}
+
+// Draw function for mouse
+function draw(e) {
   if (drawing) {
-    const mousePos = getMousePosition(e); // Get the mouse position
-    ctx.lineTo(mousePos.x, mousePos.y); // Draw a line to the mouse position
-    ctx.stroke(); // Render the line on the canvas
+    const mousePos = getMousePosition(e);
+    ctx.lineTo(mousePos.x, mousePos.y);
+    ctx.stroke();
   }
-});
+}
 
-// Stop drawing when the mouse button is released
-canvas.addEventListener('mouseup', () => {
-  drawing = false; // Stop drawing
-});
+// Draw function for touch
+function drawTouch(e) {
+  if (drawing) {
+    const touchPos = getTouchPosition(e);
+    ctx.lineTo(touchPos.x, touchPos.y);
+    ctx.stroke();
+  }
+  e.preventDefault(); // Prevent default behavior (e.g., scrolling on touch)
+}
 
-// Stop drawing if mouse leaves the canvas (optional)
-canvas.addEventListener('mouseleave', () => {
-  drawing = false; // Stop drawing if the mouse leaves the canvas
-});
+// Stop drawing function for mouse
+function stopDrawing() {
+  drawing = false;
+}
+
+// Stop drawing function for touch
+function stopDrawingTouch() {
+  drawing = false;
+}
 
 // Helper function to get mouse position relative to canvas
 function getMousePosition(e) {
-  const rect = canvas.getBoundingClientRect(); // Get canvas position on the screen
-  const scaleX = canvas.width / rect.width; // Scale factor for width
-  const scaleY = canvas.height / rect.height; // Scale factor for height
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
   return {
-    x: (e.clientX - rect.left) * scaleX, // Mouse x relative to canvas, adjusted for scaling
-    y: (e.clientY - rect.top) * scaleY,  // Mouse y relative to canvas, adjusted for scaling
+    x: (e.clientX - rect.left) * scaleX,
+    y: (e.clientY - rect.top) * scaleY
+  };
+}
+
+// Helper function to get touch position relative to canvas
+function getTouchPosition(e) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const touch = e.touches[0]; // Get the first touch point
+  return {
+    x: (touch.clientX - rect.left) * scaleX,
+    y: (touch.clientY - rect.top) * scaleY
   };
 }
 
