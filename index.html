@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Two Column Layout</title>
     <!-- Bootstrap CSS -->
@@ -23,8 +24,24 @@
                     Draw Something!
                     <img src="res/star.png" alt="Small Image" style="width:15px;height:23px;"> 
                 </div>
-                <canvas id="drawing-canvas"></canvas>
+                <canvas id="drawing-canvas" width="250" height="250"></canvas>
                 <div class="result-text"></div>
+                <div class="model-select-container">
+                    <label for="modelSelect">Choose a model:</label>
+                    <select id="modelSelect">
+                        <option value="model1">Mnist</option>
+                        <option value="model2">Emnist</option>
+                        <option value="model3">Fashion Mnist</option>
+                        <option value="model4">Cifar 10</option>
+                    </select>
+                </div>
+                <div class="upload-container">
+                    <button class="upload-button">
+                        <img src="res/images.svg" alt="Small Image" style="width:30px;height:30px;">
+                        &nbspUpload a photo!&nbsp
+                    </button>
+                    <input type="file" class="upload-image" accept="image/*">
+                </div>
                 <div class="button-container">
                     <button class="clear-button">
                         <img src="res/trash.png" alt="Small Image" style="width:30px;height:30px;">
