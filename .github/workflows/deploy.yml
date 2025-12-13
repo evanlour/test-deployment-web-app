@@ -17,7 +17,7 @@ permissions:
 
 # Ensure only one deployment runs at a time
 concurrency:
-  group: "pages"
+  group: "pages-unblock"
   cancel-in-progress: true
 
 jobs:
