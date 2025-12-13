@@ -320,8 +320,9 @@ export const Canvas = ({ selectedModel }: CanvasProps) => {
 
       tensor = tensor.transpose([2, 0, 1]).expandDims(0);
 
-      const result = (await model.predict(tensor)) as tf.Tensor;
-      const data = await result.data();
+      const result = model.predict(tensor) as tf.Tensor;
+      const probs = result.softmax()
+      const data = await probs.data();
 
       const maxVal = Math.max(...data);
       const maxIndex = data.indexOf(maxVal);

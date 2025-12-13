@@ -110,21 +110,21 @@ const Index = () => {
                   A neural network with good accuracy for handwritten digits and
                   letters.
                   <br />
-                  Accuracy: 86.66%
+                  Accuracy: 87.69%
                 </p>
               )}
               {selectedModel === "fashion-mnist" && (
                 <p>
                   A neural network for recognizing clothing items.
                   <br />
-                  Accuracy: 92.67%
+                  Accuracy: 93.50%
                 </p>
               )}
               {selectedModel === "cifar-10" && (
                 <p>
                   A neural network for recognizing different objects.
                   <br />
-                  Accuracy: 80.83%
+                  Accuracy: 84.93%
                 </p>
               )}
             </div>
